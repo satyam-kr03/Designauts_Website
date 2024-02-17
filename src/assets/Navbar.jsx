@@ -4,7 +4,7 @@ import logo from "../images/designauts_logo_white.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { Squash as Hamburger } from "hamburger-react";
 import { useClickAway } from "react-use";
-import AnimatedText from "./AnimatedText"
+import AnimatedText from "./AnimatedText";
 import blackLogo from "../images/designauts_logo_black.png";
 
 function Navbar({ textLeave, textEnter }) {
@@ -43,8 +43,8 @@ function Navbar({ textLeave, textEnter }) {
   }, [isOpen]);
 
   const variants = {
-  hidden: { y: "-100%", clipPath: "circle(0% at 50% 0)" },
-  visible: { y: 0, opacity: 1, clipPath: "circle(100% at 50% 0)" },
+    hidden: { y: "-100%", clipPath: "circle(0% at 50% 0)" },
+    visible: { y: 0, opacity: 1, clipPath: "circle(100% at 50% 0)" },
   };
 
   const transition = {
@@ -59,7 +59,11 @@ function Navbar({ textLeave, textEnter }) {
 
   return (
     <header className="relative">
-      <div className="fixed top-0 w-full z-50" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+      <div
+        className="fixed top-0 w-full z-50"
+        onMouseEnter={textEnter}
+        onMouseLeave={textLeave}
+      >
         <div className="flex items-center p-4 py-8 mb-10 mt-2 h-14 mx-auto max-w-7xl text-white">
           <motion.div
             initial={{ opacity: 0 }}
@@ -122,8 +126,11 @@ function Navbar({ textLeave, textEnter }) {
             transition={transition}
             className="fixed top-0 left-0 w-full h-full bg-white text-black p-10 z-40"
           >
-            
-            <div onMouseEnter={textEnter} onMouseLeave={textLeave} className=" pt-32 h-full lg:pl-32 flex flex-col gap-10"> 
+            <div
+              onMouseEnter={textEnter}
+              onMouseLeave={textLeave}
+              className=" pt-32 h-full lg:pl-32 flex flex-col gap-10"
+            >
               <Link
                 to="/artworks"
                 style={divLinkstyle}
@@ -137,7 +144,7 @@ function Navbar({ textLeave, textEnter }) {
                   animate="visible"
                   transition={{ delay: 1.3, duration: 0.5 }}
                 >
-                  <AnimatedText className="text-4xl" text = "ARTWORKS"/>
+                  <AnimatedText className="text-4xl" text="ARTWORKS" />
                 </motion.span>
               </Link>
               <Link
@@ -153,7 +160,7 @@ function Navbar({ textLeave, textEnter }) {
                   animate="visible"
                   transition={{ delay: 1.5, duration: 0.7 }}
                 >
-                  <AnimatedText className="text-4xl" text = "ABOUT"/>
+                  <AnimatedText className="text-4xl" text="ABOUT US" />
                 </motion.span>
               </Link>
               <Link
@@ -169,7 +176,7 @@ function Navbar({ textLeave, textEnter }) {
                   animate="visible"
                   transition={{ delay: 1.9, duration: 0.9 }}
                 >
-                  <AnimatedText className="text-4xl" text = "TEAM"/>
+                  <AnimatedText className="text-4xl" text="TEAM" />
                 </motion.span>
               </Link>
               <Link
@@ -185,7 +192,7 @@ function Navbar({ textLeave, textEnter }) {
                   animate="visible"
                   transition={{ delay: 2.2, duration: 1.5 }}
                 >
-                  <AnimatedText className="text-4xl" text = "CONTACT"/>
+                  <AnimatedText className="text-4xl" text="CONTACT" />
                 </motion.span>
               </Link>
             </div>
