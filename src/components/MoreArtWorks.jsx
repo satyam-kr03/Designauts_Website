@@ -1,7 +1,14 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import "./MoreArtWorks.css"; // Import your custom CSS file
 
 function MoreArtWorks({ textLeave, textEnter }) {
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleImageUrlChange = (url) => {
+    setImageUrl(url);
+  };
+
   const temp = [
     {
       title: "PEKKA",
@@ -44,6 +51,15 @@ function MoreArtWorks({ textLeave, textEnter }) {
       description: "This is the New Generation of IIT MANDI",
       made_by: "Luv",
       img: "/images/robo.jpg",
+      date: "09/07/23",
+      instagram: "",
+      linkedin: "",
+    },
+    {
+      title: "PEKKA",
+      description: "This is the New Generation of IIT MANDI",
+      made_by: "Luv",
+      img: "https://files.codingninjas.in/example-8720.png",
       date: "09/07/23",
       instagram: "",
       linkedin: "",
@@ -165,7 +181,10 @@ function MoreArtWorks({ textLeave, textEnter }) {
           </div>
         ))}
       </div>
-      <FileUploadButton></FileUploadButton>
+      <div>
+        <FileUploadButton onImageUrlChange={handleImageUrlChange} />
+        <FirestoreForm imageUrl={imageUrl} />
+      </div>
     </div>
   );
 }
@@ -177,7 +196,7 @@ import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 
-const FileUploadButton = () => {
+const FileUploadButton = ({ onImageUrlChange }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -196,6 +215,8 @@ const FileUploadButton = () => {
         getDownloadURL(snapshot.ref).then((url) => {
           console.log("File uploaded:", url);
           // You can handle the URL as needed, like saving it in state or passing it to another component
+          const imageUrl = url; // Replace "url" with actual URL
+          onImageUrlChange(imageUrl);
         });
       })
       .catch((error) => {
@@ -212,4 +233,111 @@ const FileUploadButton = () => {
       </button>
     </div>
   );
+};
+
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import PropTypes from "prop-types";
+
+function FirestoreForm({ imageUrl }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [made_by, setMadeBy] = useState("");
+  const [date, setDate] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [linkedin, setLinkedin] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const docRef = await addDoc(collection(db, "artworks"), {
+        title,
+        description,
+        made_by,
+        instagram,
+        linkedin,
+        date,
+        img: imageUrl, // Use the passed imageUrl prop
+      });
+      console.log("Document written with ID: ", docRef.id);
+
+      // Clear form fields after submission
+      setTitle("");
+      setDate("");
+      setDescription("");
+      setMadeBy("");
+      setInstagram("");
+      setLinkedin("");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Firestore Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            Title:
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Description:
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Your Name:
+            <input
+              type="text"
+              value={made_by}
+              onChange={(e) => setMadeBy(e.target.value)}
+            />
+          </label>
+          <label>
+            Instagram:
+            <input
+              type="text"
+              value={instagram}
+              onChange={(e) => setInstagram(e.target.value)}
+            />
+          </label>
+          <label>
+            LinkedIn:
+            <input
+              type="text"
+              value={linkedin}
+              onChange={(e) => setLinkedin(e.target.value)}
+            />
+          </label>
+          <label>
+            Date:
+            <input
+              type="text"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </label>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+}
+
+FirestoreForm.propTypes = {
+  imageUrl: PropTypes.string.isRequired,
 };
