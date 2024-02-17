@@ -9,8 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import PropTypes from "prop-types";
-import { firestore } from "../firebase";
 
+const firestore = db;
 // Function to retrieve document and convert it into key-value pairs
 async function getDocumentDataAsKeyValuePairs(collectionName, documentId) {
   try {
