@@ -308,7 +308,7 @@ function FirestoreForm({ imageUrl }) {
 
   return (
     <div>
-      <h2>Firestore Form</h2>
+      <h2>Submit Your Own Artwork !</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>
@@ -319,6 +319,8 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
+          <br />
+          <br />
         </div>
         <div>
           <label>
@@ -329,6 +331,8 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
+          <br />
+          <br />
         </div>
         <div>
           <label>
@@ -339,6 +343,8 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setMadeBy(e.target.value)}
             />
           </label>
+          <br />
+          <br />
           <label>
             Instagram:
             <input
@@ -347,6 +353,8 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setInstagram(e.target.value)}
             />
           </label>
+          <br />
+          <br />
           <label>
             LinkedIn:
             <input
@@ -355,6 +363,8 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setLinkedin(e.target.value)}
             />
           </label>
+          <br />
+          <br />
           <label>
             Date:
             <input
@@ -363,6 +373,8 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setDate(e.target.value)}
             />
           </label>
+          <br />
+          <br />
         </div>
         <button type="submit">Submit</button>
       </form>
