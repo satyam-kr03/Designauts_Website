@@ -50,85 +50,11 @@ function MoreArtWorks({ textLeave, textEnter }) {
     setImageUrl(url);
   };
 
-  let temp = [
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "/images/pekka.jpg",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "/images/collage.jpg",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "/images/diwali.jpg",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "/images/new.jpg",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "/images/robo.jpg",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "https://files.codingninjas.in/example-8720.png",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "/images/pekka.jpg",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-    {
-      title: "PEKKA",
-      description: "This is the New Generation of IIT MANDI",
-      made_by: "Luv",
-      img: "/images/pekka.jpg",
-      date: "09/07/23",
-      instagram: "",
-      linkedin: "",
-    },
-  ];
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  temp = artworks;
+  let temp = artworks;
 
   return (
     <div
@@ -225,8 +151,8 @@ function MoreArtWorks({ textLeave, textEnter }) {
         ))}
       </div>
       <div>
-        <FirestoreForm imageUrl={imageUrl} />
         <FileUploadButton onImageUrlChange={handleImageUrlChange} />
+        <FirestoreForm imageUrl={imageUrl} />
       </div>
     </div>
   );
@@ -250,21 +176,21 @@ const FileUploadButton = ({ onImageUrlChange }) => {
       .then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           console.log("File uploaded:", url);
-          // You can handle the URL as needed, like saving it in state or passing it to another component
-          const imageUrl = url; // Replace "url" with actual URL
+          const imageUrl = url;
           onImageUrlChange(imageUrl);
         });
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
-        // Handle error if any
       });
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button className="mx-auto block mb-10" onClick={handleButtonClick}>
+    <div className="file-upload-container">
+      <h2>Submit Your Own Artwork !</h2>
+      <br />
+      <input type="file" onChange={handleFileChange} className="file-input" />
+      <button className="upload-button" onClick={handleButtonClick}>
         Upload
       </button>
     </div>
@@ -290,11 +216,10 @@ function FirestoreForm({ imageUrl }) {
         instagram,
         linkedin,
         date,
-        img: imageUrl, // Use the passed imageUrl prop
+        img: imageUrl,
       });
       console.log("Document written with ID: ", docRef.id);
 
-      // Clear form fields after submission
       setTitle("");
       setDate("");
       setDescription("");
@@ -307,8 +232,8 @@ function FirestoreForm({ imageUrl }) {
   };
 
   return (
-    <div>
-      <h2>Submit Your Own Artwork !</h2>
+    <div className="centered-container">
+      <br />
       <form onSubmit={handleSubmit}>
         <div>
           <label>
@@ -319,8 +244,6 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
-          <br />
-          <br />
         </div>
         <div>
           <label>
@@ -331,8 +254,6 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
-          <br />
-          <br />
         </div>
         <div>
           <label>
@@ -343,8 +264,6 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setMadeBy(e.target.value)}
             />
           </label>
-          <br />
-          <br />
           <label>
             Instagram:
             <input
@@ -353,8 +272,6 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setInstagram(e.target.value)}
             />
           </label>
-          <br />
-          <br />
           <label>
             LinkedIn:
             <input
@@ -363,8 +280,6 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setLinkedin(e.target.value)}
             />
           </label>
-          <br />
-          <br />
           <label>
             Date:
             <input
@@ -373,8 +288,6 @@ function FirestoreForm({ imageUrl }) {
               onChange={(e) => setDate(e.target.value)}
             />
           </label>
-          <br />
-          <br />
         </div>
         <button type="submit">Submit</button>
       </form>
