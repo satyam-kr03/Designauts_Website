@@ -50,7 +50,7 @@ function MoreArtWorks({ textLeave, textEnter }) {
     setImageUrl(url);
   };
 
-  const temp = [
+  let temp = [
     {
       title: "PEKKA",
       description: "This is the New Generation of IIT MANDI",
@@ -127,6 +127,8 @@ function MoreArtWorks({ textLeave, textEnter }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  temp = artworks;
 
   return (
     <div
