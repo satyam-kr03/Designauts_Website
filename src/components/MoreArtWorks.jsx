@@ -176,6 +176,7 @@ const FileUploadButton = ({ onImageUrlChange }) => {
       .then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           console.log("File uploaded:", url);
+          alert("Image Uploaded !");
           const imageUrl = url;
           onImageUrlChange(imageUrl);
         });
@@ -208,6 +209,11 @@ function FirestoreForm({ imageUrl }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (!imageUrl) {
+      alert("Please upload an image first.");
+      return;
+    }
+
     try {
       const docRef = await addDoc(collection(db, "artworks"), {
         title,
@@ -219,6 +225,7 @@ function FirestoreForm({ imageUrl }) {
         img: imageUrl,
       });
       console.log("Document written with ID: ", docRef.id);
+      alert("Artwork added successfully!");
 
       setTitle("");
       setDate("");
@@ -228,6 +235,7 @@ function FirestoreForm({ imageUrl }) {
       setLinkedin("");
     } catch (error) {
       console.error("Error adding document: ", error);
+      alert("Error adding document: ", error);
     }
   };
 
