@@ -6,14 +6,45 @@ import { useState, useEffect } from "react";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
-import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import PropTypes from "prop-types";
 
-// Example usage
+const artworks = "artworks";
+
+const findAll = async () => {
+  const doc_refs = await getDocs(collection(db, artworks));
+
+  const res = [];
+
+  doc_refs.forEach((artwork) => {
+    res.push({
+      id: artwork.id,
+      ...artwork.data(),
+    });
+  });
+
+  return res;
+};
 
 function MoreArtWorks({ textLeave, textEnter }) {
   const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [artworks, setArtworks] = useState([]);
+
+  const fetchData = async () => {
+    setLoading(true);
+
+    const res = await findAll();
+
+    setArtworks([...res]);
+    setLoading(false);
+    console.log(res);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleImageUrlChange = (url) => {
     setImageUrl(url);
