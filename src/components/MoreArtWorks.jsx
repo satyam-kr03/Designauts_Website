@@ -225,8 +225,8 @@ function MoreArtWorks({ textLeave, textEnter }) {
         ))}
       </div>
       <div>
-        <FileUploadButton onImageUrlChange={handleImageUrlChange} />
         <FirestoreForm imageUrl={imageUrl} />
+        <FileUploadButton onImageUrlChange={handleImageUrlChange} />
       </div>
     </div>
   );
