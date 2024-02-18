@@ -10,62 +10,10 @@ import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import PropTypes from "prop-types";
 
-const firestore = db;
-// Function to retrieve document and convert it into key-value pairs
-async function getDocumentDataAsKeyValuePairs(collectionName, documentId) {
-  try {
-    const docRef = doc(db, collectionName, documentId);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      // Convert document data to key-value pairs
-      const data = docSnap.data();
-      const keyValuePairs = Object.entries(data).map(([key, value]) => ({
-        key,
-        value,
-      }));
-      return keyValuePairs;
-    } else {
-      console.log("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error getting document:", error);
-    return null;
-  }
-}
-
 // Example usage
 
 function MoreArtWorks({ textLeave, textEnter }) {
   const [imageUrl, setImageUrl] = useState("");
-
-  const [artworks, setArtworks] = useState([]); // State to hold artworks
-
-  useEffect(() => {
-    const fetchArtworks = async () => {
-      try {
-        const snapshot = await firestore.collection("artworks").get();
-        const artworksData = [];
-        snapshot.forEach((doc) => {
-          artworksData.push({ id: doc.id, ...doc.data() });
-        });
-        setArtworks(artworksData);
-      } catch (error) {
-        console.error("Error fetching artworks:", error);
-      }
-    };
-
-    fetchArtworks();
-
-    // Clean-up function if necessary
-    return () => {
-      // Any clean-up code here if needed
-    };
-  }, []);
-
-  // You can now use the 'artworks' state variable which contains all artworks
-  console.log("Artworks:", artworks);
 
   const handleImageUrlChange = (url) => {
     setImageUrl(url);
